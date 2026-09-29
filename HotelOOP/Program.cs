@@ -11,10 +11,6 @@ namespace HotelOOP
         {
             List<HotelBooking> totalguest = new List<HotelBooking>();
 
-            Player background = new Player();
-
-            _ = background.Play("C:\\Users\\lea\\source\\repos\\HotelOOP\\HotelOOP\\hotel.mp3");
-
             bool run = true;
 
             while (run)
@@ -30,7 +26,7 @@ namespace HotelOOP
                     switch (choice)
                     {
                         case 1:
-                            BookingRequest(totalguest, background);
+                            BookingRequest(totalguest);
 
                             break;
 
@@ -47,7 +43,7 @@ namespace HotelOOP
             }
         }
 
-        public static void BookingRequest(List<HotelBooking> totalguest, Player background)
+        public static void BookingRequest(List<HotelBooking> totalguest)
         {
             Console.Clear();
             Console.WriteLine("New Booking: ");
@@ -62,11 +58,7 @@ namespace HotelOOP
 
             if (string.IsNullOrWhiteSpace(name))
             {
-                background.Pause();
                 Console.WriteLine("Invalid name, idiot.Retry.");
-                var error = new Player().Play(
-                    "C:\\Users\\lea\\source\\repos\\HotelOOP\\HotelOOP\\error.mp3"
-                );
                 return;
             }
 
