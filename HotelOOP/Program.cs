@@ -11,6 +11,15 @@ namespace HotelOOP
         {
             List<HotelBooking> totalguest = new List<HotelBooking>();
 
+            Console.Clear();
+
+            Department hotel = new Department("The OOP Hotel");
+            Department frontDesk = new Department("Front Desk");
+            Department housekeeping = new Department("Housekeeping");
+
+            hotel.AddSubdepartment(frontDesk);
+            hotel.AddSubdepartment(housekeeping);
+
             bool run = true;
 
             while (run)
@@ -19,7 +28,9 @@ namespace HotelOOP
                 Console.WriteLine("Menu Options:");
                 Console.WriteLine("1. Make a booking.");
                 Console.WriteLine("2. Change Booking");
-                Console.WriteLine("3.Exit");
+                Console.WriteLine("3. Add a new employee");
+                Console.WriteLine("4. Fire a employee");
+                Console.WriteLine("5.Exit");
                 string input = Console.ReadLine();
                 if (int.TryParse(input, out int choice))
                 {
@@ -36,6 +47,14 @@ namespace HotelOOP
                             break;
 
                         case 3:
+                            AddEmployee();
+                            break;
+
+                        case 4:
+                            FireEmployee(frontDesk);
+                            break;
+
+                        case 5:
                             Environment.Exit(1);
                             break;
                     }
@@ -111,6 +130,48 @@ namespace HotelOOP
             }
 
             Console.WriteLine("No booking found with that name.");
+        }
+
+        public static void AddEmployee()
+        {
+            Console.Clear();
+            Console.WriteLine("Add a new employee: ");
+            Console.Write("What´s the employee name?: ");
+            string name = Console.ReadLine();
+            Department frontDesk = new Department("Front Desk");
+
+            Console.WriteLine("What´s the employee job title?: ");
+            Console.WriteLine("Job title options: Front Desk, Housekeeper, Manager");
+            string jobTitle = Console.ReadLine();
+
+            switch (jobTitle)
+            {
+                case "Front Desk":
+                    frontDesk.AddEmployee(new Employee { Name = name, JobTitle = "Receptionist" });
+
+                    break;
+                case "Housekeeper":
+                    frontDesk.AddEmployee(new Employee { Name = name, JobTitle = "Housekeeper" });
+                    break;
+                case "Manager":
+                    frontDesk.AddEmployee(new Employee { Name = name, JobTitle = "Manager" });
+                    break;
+                default:
+                    Console.WriteLine("Invalid job title.");
+                    return;
+            }
+
+            frontDesk.PrintOrganizationChart();
+        }
+
+        public static void FireEmployee(Department frontDesk)
+        {
+            Console.Clear();
+            Console.WriteLine("Fire an employee: ");
+            Console.Write("What´s the employee name?: ");
+            string name = Console.ReadLine();
+            frontDesk.RemoveEmployee(new Employee { Name = name });
+            Console.WriteLine($"Employee {name} has been fired.");
         }
     }
 }
