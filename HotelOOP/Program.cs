@@ -2,25 +2,20 @@
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using NetCoreAudio;
+
 namespace HotelOOP
 {
     internal class Program
     {
         static void Main(string[] args)
         {
-
             List<HotelBooking> totalguest = new List<HotelBooking>();
 
             Player background = new Player();
 
-            _ = background.Play(
-                "C:\\Users\\lea\\source\\repos\\HotelOOP\\HotelOOP\\hotel.mp3"
-            );
-
-
+            _ = background.Play("C:\\Users\\lea\\source\\repos\\HotelOOP\\HotelOOP\\hotel.mp3");
 
             bool run = true;
-
 
             while (run)
             {
@@ -47,58 +42,54 @@ namespace HotelOOP
                         case 3:
                             Environment.Exit(1);
                             break;
-
-
                     }
-
                 }
-
-
-
             }
-
         }
+
         public static void BookingRequest(List<HotelBooking> totalguest, Player background)
         {
             Console.Clear();
             Console.WriteLine("New Booking: ");
             Console.Write("What´s your name?: ");
             string name = Console.ReadLine();
-            Console.Write("What´s your phone number?: " );
-            
+            Console.Write("What´s your phone number?: ");
+
             int phonenumber = Convert.ToInt32(Console.ReadLine());
             Console.Write("What is your email address?");
 
             string email = Console.ReadLine();
-            
 
             if (string.IsNullOrWhiteSpace(name))
             {
                 background.Pause();
                 Console.WriteLine("Invalid name, idiot.Retry.");
-                var error = new Player().Play("C:\\Users\\lea\\source\\repos\\HotelOOP\\HotelOOP\\error.mp3");
+                var error = new Player().Play(
+                    "C:\\Users\\lea\\source\\repos\\HotelOOP\\HotelOOP\\error.mp3"
+                );
                 return;
-
             }
 
             Console.Write("How many nights?: ");
 
             if (int.TryParse(Console.ReadLine(), out int nights) && nights > 0)
             {
-
-                HotelBooking info = new HotelBooking(name, DateTime.Now, nights, phonenumber, email);
+                HotelBooking info = new HotelBooking(
+                    name,
+                    DateTime.Now,
+                    nights,
+                    phonenumber,
+                    email
+                );
 
                 info.PrintInfo();
 
                 totalguest.Add(info);
             }
-
             else
             {
                 Console.WriteLine("Please enter a positive number.");
             }
-
-          
         }
 
         public static void ChangeBooking(List<HotelBooking> bookings)
@@ -110,7 +101,7 @@ namespace HotelOOP
 
             foreach (HotelBooking booking in bookings)
             {
-                if (booking.GuestName.Equals(name, StringComparison.OrdinalIgnoreCase))
+                if (booking.Guest.Name.Equals(name, StringComparison.OrdinalIgnoreCase))
                 {
                     Console.Write("Add how many nights?: ");
                     if (int.TryParse(Console.ReadLine(), out int nights) && nights > 0)
@@ -130,6 +121,4 @@ namespace HotelOOP
             Console.WriteLine("No booking found with that name.");
         }
     }
-        }
-
-    
+}
